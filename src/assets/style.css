@@ -9,6 +9,12 @@
 .modal-flex-inner .modal-content {overflow: auto; padding:20px;}
 .modal-flex-inner .modal-footer {padding:20px;}
 
+/* form */
+.form-control {height:32px; padding:4px 10px; font-size:14px; border:1px solid #dcdcdc; border-radius:4px !important; transition:border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;}
+.form-control:focus {border-color:#85818D; outline:none;}
+.form-control.focus-red {border-color:#ff003e; outline:none;}
+.form-lg {height:auto; padding:15px; font-size:16px;}
+.form-md {height:auto; padding:8px 15px; font-size:15px;}
 
 /* treeview */
 .tree-view .mn-item {padding-left:1.5rem; overflow-x:hidden; position: relative;}
@@ -31,3 +37,89 @@
 .tree-view .nested > .mn-item > .mn-link.selected:before {background:#E4DEEE;}
 .tree-view .nested {max-height:0; overflow: hidden;} 
 .tree-view .active {display:block; max-height:100vh; transition:1.8s;}
+
+/* radio, checkbox */
+.label-checkbox {display: flex; align-items: center; align-content: center; cursor:pointer; position:relative;}
+.label-checkbox input[type="checkbox"] {position:absolute; opacity:0;}
+.label-checkbox .mark {top: 2px;left: 0;height: 18px;width: 18px;background: #fff;border-radius: 4px; border:1px solid #bbb;}
+.label-checkbox .mark:after {content: ""; position: absolute; display: none;}
+.label-checkbox .mark:after {left: 5px; top: 3px; width: 7px; height: 11px; border: solid #A020AB;border-width: 0 2px 2px 0;-webkit-transform: rotate(45deg);-ms-transform: rotate(45deg);transform: rotate(45deg);}
+.label-checkbox:hover input ~ .mark {border-color:#85818D; transition: 0.2s;}
+.label-checkbox input:checked ~ .mark {background: #fff; border-color:#bbb;}
+.label-checkbox input:checked ~ .mark:after {display: block;}
+.label-checkbox .text {font-size:14px; margin-left:6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right:1px;}
+
+.label-radio {display: flex; align-items: center; align-content: center; cursor:pointer; position:relative;}
+.label-radio input[type="radio"] {position:absolute; opacity:0;}
+.label-radio .mark {top: 2px;left: 0;height: 18px;width: 18px;background: #fff;border-radius: 100px; border:1px solid #bbb;}
+.label-radio .mark:after {content: ""; position: absolute; display: none;}
+.label-radio .mark:after {left: 4px; top: 6px; width: 10px; height: 10px; background: #A020AB; border-radius:100px;}
+.label-radio:hover input ~ .mark {border-color:#85818D; transition: 0.2s;}
+.label-radio input:checked ~ .mark {background: #fff; border-color:#bbb;}
+.label-radio input:checked ~ .mark:after {display: block;}
+.label-radio .text {font-size:14px; margin-left:6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right:1px;}
+
+.label-radio-btn {cursor: pointer;}
+.label-radio-btn .text {min-width:100px; height:32px; border:1px solid #ddd; border-radius:4px; display: flex; align-items: center; align-content: center; justify-content: center; font-size:14px; cursor: pointer;}
+.label-radio-btn:hover .text {border-color:#85818D; transition: 0.2s;}
+.label-radio-btn input[type="radio"] {position:absolute; opacity:0;}
+.label-radio-btn input[type=radio]:checked + .text {background:#FBF0FF; border-color:#8639B4; color:#8639B4;}
+
+.label-radio-btn.label-lg .text {height:46px;} /* radio-btn size */
+
+.label-radio.label-blue .mark:after {background:#4D94FF;}
+.label-radio.label-blue input:checked ~ .mark {border-color:#4D94FF;}
+.label-radio-btn.label-blue input[type=radio]:checked + .text {background:#EFF5FF; border-color:#4D94FF; color:#0046AF;} /* radio-btn color */
+
+
+/* button */
+.btn {display:inline-block; text-align:center; white-space:nowrap; height:32px; padding:5px 12px; font-weight:500; transition:0.15s; user-select: none;}
+
+.btn-solid {border-radius:4px; background:#4D94FF ; border:1px solid #4D94FF ; color:#fff;}
+.btn-solid:hover {background:#1b64da; border-color:#1b64da;}
+.btn-solid:active {background:#4D94FF ; border-color:#4D94FF ;}
+
+.btn-lightsolid {border-radius:4px; background:#f2f3f4; border:1px solid #F6F6F7; color:#4D94FF ;}
+.btn-lightsolid:hover {background:#e5e5e5; border-color:#e5e5e5;}
+
+.btn-ghost {border-radius:4px; background:#fff; border:1px solid #4D94FF ; color:#4D94FF ;}
+.btn-ghost:hover {opacity: 0.85;}
+.btn-ghost:active {opacity: 1;}
+
+.btn-outline {border-radius:4px; background:#fff; border:1px solid #A5A5A5;}
+.btn-outline.light {border-color: #ddd;}
+.btn-outline:hover {background:#eee; border-color:#eee;}
+.btn-outline:active {background:#ddd; border-color:#ddd;}
+    .btn-solid i, .btn-ghost i, .btn-outline i {margin-right:4px; font-size:12px;}
+
+.btn.round {border-radius:100px;}
+
+.btn-text {border-radius:0;}
+.btn-icon {border-radius:4px;}
+    .btn-icon i {margin:0;}
+.btn.btn-icon {padding:5px 9px;}
+
+.btn[disabled] {background:#ddd; border-color:#ddd; color:#fff; cursor: default;}
+
+.btn .count {display: inline-block; margin-left:6px; width:20px; height:20px; font-size:13px; border-radius:100px; background:#33C534; color:#fff;}
+
+.btn-md {height:auto; padding:7px 18px 8px 18px; font-size:14px;}
+.btn-lg {height:auto; padding:13px 20px; font-size:16px;} /* btn size */
+.btn-main {height:auto; padding:9px 20px 11px 20px; font-size:16px; min-width:150px;} /* 메인버튼 최종액션버튼 */
+
+.btn-box {position: relative; text-align: center;}  /* ex. 서비스 요청 폼 하단 */
+    .btn-box .left {position:absolute; left:0; top:30px;}
+    .btn-box .right {position:absolute; right:0; top:30px;}
+    .btn-box .center {text-align:center;}
+
+.btn-box .btn {margin:0 2px;}
+    .btn-box .left .btn:first-child {margin-left:0;}
+    .btn-box .left .btn:last-child {margin-right:0;}
+.btn-box.bottom {border-top:1px solid #ddd; margin-top:30px; padding-top:30px; min-height:60px;}
+
+.scroll-to-top {display: inline-flex; align-items: center; justify-content: center; font-size:13px; color:#777;}
+.scroll-to-top i {font-size:10px; color:#1890FF;}
+
+.btn-wrap {display: flex; align-items: center; align-content: center;}
+.btn-wrap > * {margin-left:6px;}
+.btn-wrap > *:first-child {margin-left:0;}
