@@ -1,0 +1,33 @@
+/* modal */
+.modal {position:fixed; left:0; top: 0; width:100%; height:100%; background-color:rgb(0,0,0); background-color:rgba(0,0,0,0.4); z-index:99999; }
+
+.modal-flex { display:flex; display: -ms-flexbox; display: -webkit-flex; height:100vh; justify-content: center; align-items: center; }
+.modal-flex-inner { background:#fff; border-radius: 10px; min-width:400px; max-width:90%; max-height:90vh; overflow:auto; display: flex; flex-direction: column; justify-content: flex-start;}
+.modal-flex-inner .modal-header {background:#fff;}
+.modal-flex-inner .modal-header .mr-auto {margin:0; padding:0; font-size:1.2rem; padding:20px 10px 10px 20px; min-height: 40px;}
+.modal-flex-inner .modal-header .ml-auto {padding:10px;}
+.modal-flex-inner .modal-content {overflow: auto; padding:20px;}
+.modal-flex-inner .modal-footer {padding:20px;}
+
+
+/* treeview */
+.tree-view .mn-item {padding-left:1.5rem; overflow-x:hidden; position: relative;}
+    .tree-view > .mn-item > .mn-link {font-size:14.3px;}
+    #leftmenu .tree-view > .mn-item {padding-left:10px;}
+    .list-nav .tree-view > .mn-item {padding-left:1.7rem;}
+.tree-view .mn-item .mn-link {display:flex; align-items:center; justify-content: space-between; padding-left:100%; margin-left:-100%; padding-right:100%; margin-right:-100%; padding-top:9px; padding-bottom:10px; border-radius:4px; transition: 0.1s;}
+.tree-view .mn-item .mn-link:hover {cursor:pointer; background:#edeef3;}
+.tree-view .mn-item .mn-link:active {cursor:pointer; background:#e5e6ec;}
+.tree-view .mn-item .mn-link .mn-icon, .mn-icon {margin-right:10px;}
+.tree-view .mn-item .mn-link .mn-name, .mn-name {flex:auto; word-break: break-all;}
+.tree-view .mn-item .mn-link .mn-collapse {margin:0 6px; font-size:10px; transition: 0.5s;}
+.tree-view .nested > .mn-item > .mn-link:before {content:''; width:1px; height:100%; background:#E4E5EA; border-radius:15px; position: absolute; left:6px; top:0;}
+    #leftmenu .tree-view .nested > .mn-item > .mn-link:before {left:0; display: none;}
+    .list-nav .tree-view .nested > .mn-item > .mn-link:before {left:0; display: none;}
+
+.tree-view .open .mn-collapse {-webkit-transform: rotate(90deg); transform: rotate(90deg);}
+.tree-view .selected, .tree-view .mn-item .mn-link.selected:hover {background:#e0ecff; color:#1b64da; font-weight:500;}
+.tree-view .selected a {color:#A020AB;}
+.tree-view .nested > .mn-item > .mn-link.selected:before {background:#E4DEEE;}
+.tree-view .nested {max-height:0; overflow: hidden;} 
+.tree-view .active {display:block; max-height:100vh; transition:1.8s;}
