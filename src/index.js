@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import ExcelComponents from "./components";
+import App from "./components";
 import "./assets/style.css";
 import "./assets/index.css";
 import "./assets/common.css";
@@ -9,7 +9,20 @@ import reportWebVitals from "./reportWebVitals";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ExcelComponents fileName={"test"} data={[[], []]} sheetName={[1, 2]} />
+    <App
+      fileName={"RRR"}
+      data={[
+        [
+          { 필드이름: "table1", 값: 1 },
+          { 필드이름: "table2", 값: 2 },
+        ],
+        [
+          { 값: "table1", 이름: 1 },
+          { 값: "table2", 이름: 2 },
+        ],
+      ]}
+      sheetName={[1, 2]}
+    />
   </React.StrictMode>,
 );
 

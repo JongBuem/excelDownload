@@ -1,17 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
+import { Dialog } from "@mui/material";
 import { DeleteID, ExcelData } from "./class";
-import { Dialog, Tabs } from "@mui/material";
-import { a11yProps, CustomTab } from "./Tab";
 import CheckBoxList from "./CheckBoxList";
+import XlsxButton from "./XlsxButton";
+import CsvButton from "./CsvButton";
+import XlsxTab from "./XlsxTab";
 
-export default function XlsxComponent({
+export default function Excel({
   buttonComponent,
   fileName,
   data,
   sheetName,
+  xlsx,
 }) {
   const [open, setOpen] = React.useState(false);
   const [fileTitle, setFileTitle] = React.useState(fileName);
@@ -21,54 +22,38 @@ export default function XlsxComponent({
   const [changeCheckBox, setChangeCheckBox] = React.useState([[]]);
   const [allCheckBox, setAllCheckBox] = React.useState(true);
   const [value, setValue] = React.useState(0);
-  const [sheetArry] = React.useState(sheetName);
 
+  //modal 열기
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  //modal 닫기
   const handleClose = () => {
     setOpen(false);
   };
 
-  const tabhandleChange = (event, newValue) => {
-    setValue(newValue); //tab 위치 변경
-  };
-
-  const ChangeCheck = (checked, field, valueIndex) => {
-    const reuslt = changeCheckBox.map((v, i) => {
-      if (i == valueIndex && checked) return v.concat(field);
-      else if (i == valueIndex && !checked) return v?.filter((o) => o != field);
-      else return v;
+  //다운로드 항목 관리
+  const ChangeCheck = (checked, field, checkedIndex) => {
+    const reuslt = changeCheckBox.map((value, index) => {
+      if (index === checkedIndex && checked) return value.concat(field);
+      else if (index === checkedIndex && !checked)
+        return value?.filter((prev) => prev !== field);
+      else return value;
     });
     setChangeCheckBox(reuslt);
   };
 
-  React.useEffect(() => {
-    if (open) {
-      setValue(0);
-      setAllCheckBox(true);
-      setFileTitle(fileName);
-
-      const result = new DeleteID(data).getArray(); //object id key 제거
-      setOriginalData(result);
-      setDownloadData(result);
-
-      const header = new ExcelData(result).getHeader(); //필드 이름
-      setOriginalCheckBox(header);
-      setChangeCheckBox(header);
-    }
-  }, [open]);
-
+  //항목 변경시 동작
   React.useEffect(() => {
     const result = new ExcelData(originalData).getData(changeCheckBox);
-    setDownloadData(result);
+    setDownloadData(result); //선택된 항목만 데이터로 추출
   }, [changeCheckBox, value]);
 
+  //항목 전체선택시 동작
   React.useEffect(() => {
-    if (allCheckBox) {
-      setChangeCheckBox(originalCheckBox);
-    } else if (!allCheckBox) {
+    if (allCheckBox) setChangeCheckBox(originalCheckBox);
+    else if (!allCheckBox) {
       const result = originalCheckBox?.map(() => {
         return [];
       });
@@ -76,27 +61,22 @@ export default function XlsxComponent({
     }
   }, [allCheckBox]);
 
-  const Download = (fileName, downloadData, sheetName) => {
-    const sheet = sheetName.map((value) => value.toString());
-    let sheetsData = {};
-    const fileType =
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-    const fileExtension = ".xlsx";
+  //모달 오픈시 동작
+  React.useEffect(() => {
+    if (!open) {
+      setValue(0); //tab의 위치를 첫번째로 이동
+      setAllCheckBox(true); //항목 전체선택 체크
+      setFileTitle(fileName); //파일이름
 
-    for (let i = 0; i < downloadData.length; i++) {
-      const wss = XLSX.utils.json_to_sheet(downloadData[i]);
-      sheetsData[sheet[i]] = wss;
+      const result = new DeleteID(data).getArray(); //object id key 제거
+      setOriginalData(result); //id를 제거한 원본 데이터
+      setDownloadData(result); //id를 제거한 원본 데이터 (최종 다운로드 되는 데이터)
+
+      const header = new ExcelData(result).getHeader(); //필드 이름
+      setOriginalCheckBox(header); //각 Tab의 필드 이름들
+      setChangeCheckBox(header); //변경되는 필드 이름들
     }
-
-    let wb = {
-      Sheets: sheetsData,
-      SheetNames: sheet,
-    };
-
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const data = new Blob([excelBuffer], { type: fileType });
-    saveAs(data, `${fileName}${fileExtension}`);
-  };
+  }, [open]);
 
   return (
     <>
@@ -136,28 +116,15 @@ export default function XlsxComponent({
                   onChange={(v) => setFileTitle(v.target.value)}
                 />
                 <div className="space-20"></div>
-                <p className="ft-darkgray mb-5" style={{ margin: 0 }}>
-                  다운로드 항목
-                </p>
-                <Tabs
-                  value={value}
-                  onChange={(e, v) => tabhandleChange(e, v)}
-                  aria-label="basic tabs example"
-                  TabIndicatorProps={{
-                    style: {
-                      backgroundColor: "#9741B5",
-                    },
-                  }}
-                >
-                  {sheetArry.map((item, index) => (
-                    <CustomTab
-                      key={index}
-                      disableRipple
-                      label={item}
-                      {...a11yProps(index)}
-                    />
-                  ))}
-                </Tabs>
+                <p className="ft-darkgray mb-5">다운로드 항목</p>
+
+                {xlsx && data?.length === sheetName?.length && (
+                  <XlsxTab
+                    value={value}
+                    sheetName={sheetName}
+                    setValue={setValue}
+                  />
+                )}
 
                 <div
                   className="bdr bdr-all bdr-gray"
@@ -193,15 +160,19 @@ export default function XlsxComponent({
                     <button className="btn btn-outline" onClick={handleClose}>
                       취소
                     </button>
-                    <button
-                      className="btn btn-solid"
-                      style={{ marginLeft: 5 }}
-                      onClick={() =>
-                        Download(fileTitle, downloadData, sheetName)
-                      }
-                    >
-                      다운로드
-                    </button>
+
+                    {xlsx && data?.length === sheetName?.length ? (
+                      <XlsxButton
+                        fileTitle={fileTitle}
+                        downloadData={downloadData}
+                        sheetName={sheetName}
+                      />
+                    ) : (
+                      <CsvButton
+                        fileTitle={fileTitle}
+                        downloadData={downloadData}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -212,10 +183,10 @@ export default function XlsxComponent({
     </>
   );
 }
-
-XlsxComponent.propTypes = {
+Excel.propTypes = {
   buttonComponent: PropTypes.element,
   fileName: PropTypes.string,
   data: PropTypes.array,
   sheetName: PropTypes.array,
+  xlsx: PropTypes.bool,
 };
