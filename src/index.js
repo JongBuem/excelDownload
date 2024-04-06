@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import "./App.css";
-import "./style.css";
+import ExcelComponents from "./components";
+import "./assets/style.css";
+import "./assets/index.css";
+import "./assets/common.css";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App fileName={"test"} data={[[], []]} sheetName={[1, 2]} />
+    <ExcelComponents fileName={"test"} data={[[], []]} sheetName={[1, 2]} />
   </React.StrictMode>,
 );
 

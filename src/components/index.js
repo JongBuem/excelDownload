@@ -4,7 +4,7 @@ import * as XLSX from "xlsx";
 import { CSVLink } from "react-csv";
 import { saveAs } from "file-saver";
 import { Dialog, Tab, Tabs, Box } from "@mui/material";
-import { DeleteID, ExcelData } from "./ExcelClass";
+import { DeleteID, ExcelData } from "./class";
 import { styled } from "@mui/material/styles";
 
 const STYLE = {
